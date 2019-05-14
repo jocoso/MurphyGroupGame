@@ -1,0 +1,30 @@
+package indie_smash_brothers;
+
+import java.util.ArrayList;
+
+public class Camera{
+	static int x;
+	static int y;
+	static int z;
+	
+	static int angle;
+	
+	
+	public static void set(int x, int y, int z){
+		Camera.x = x;
+		Camera.y = y;
+		Camera.z = z;
+		
+		Camera.angle = angle;
+	}
+	
+	private static class collisionDetection {
+		ArrayList objects;
+		boolean visible;
+		collisionDetection() {
+			objects = new ArrayList();
+			visible = false;
+		}
+	}
+	
+}
