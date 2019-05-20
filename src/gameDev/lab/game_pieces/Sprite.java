@@ -1,13 +1,16 @@
 package gameDev.lab.game_pieces;
 import java.awt.*;
 import java.util.LinkedList;
+
+import gameDev.lab.physics.Rectangle;
+
 import java.io.FileReader;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-public class Sprite {
+public class Sprite implements Entity{
 	int x, y, z, w, h;
 	float dx, dy;
 	
@@ -15,9 +18,16 @@ public class Sprite {
 	Animation[] anim;
 	LinkedList<String> script;
 	
+	String name;
+	
+	int floorY;
+	
 	int pose = 0;
 	
 	boolean moving = false;
+	
+	
+	Rectangle rect;
 	
 	public Sprite(int x, int y, int z, int w, int h,
 				  String name, String addr, String[] poses, int count, int duration) {
@@ -29,11 +39,15 @@ public class Sprite {
 		
 		anim = new Animation[poses.length];
 		script = new LinkedList<String>();
+		this.name = name;
+		rect = new Rectangle(x, y, 80, 120);
 		
 		
 		for(int i = 0; i < poses.length; i++)
 			anim[i] = new Animation(name + "_" + poses[i], addr,
 					count, duration);
+		
+		//System.out.println(anim[0].getStillImage().getHeight(null));
 	}
 
 	public void moveLeft(int dist) {
@@ -84,6 +98,8 @@ public class Sprite {
 	 public void update() {	 
 		 x += dx;
 		 y += dy;
+		 rect.x = x;
+		 rect.y = y;
 		 
 	 }
 	 
@@ -104,6 +120,9 @@ public class Sprite {
 	 }
 	
 	public void draw2D(Graphics g) {
+		g.setColor(Color.BLUE);
+		rect.draw(g);
+		
 		if(moving)
 			g.drawImage(anim[pose].getCurrentImage(),
 			x, y, null);
@@ -111,6 +130,11 @@ public class Sprite {
 			g.drawImage(anim[pose].getStillImage(),
 			x, y, null);
 		moving = false;
+		
+	}
+	
+	public Rectangle getRect() {
+		return rect;
 	}
 	
 	public void setScript(String document) {
@@ -139,6 +163,16 @@ public class Sprite {
 	public String read(int line) {
 		return script.get(line);
 	}
+
+	@Override
+	public String getName() {
+		return name;
+	}
 	
+	/**
+	 * If collision is found, returns true. 
+	 * Otherwise, returns false.
+	 */
+
 	
 }

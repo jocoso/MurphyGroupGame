@@ -13,9 +13,9 @@ public abstract class GameCore extends JFrame{
 	protected static final int FONT_SIZE = 24;
 	private boolean isRunning;
 	
-	public GameCore() {
+	public GameCore(int width, int height) {
 		super("A window!");
-		setSize(800, 500);
+		setSize(width, height);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(false);
 	}

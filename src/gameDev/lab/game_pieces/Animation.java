@@ -1,20 +1,24 @@
 package gameDev.lab.game_pieces;
 import java.awt.*;
 
+import javax.swing.ImageIcon;
+
 public class Animation {
 	private Image[] image;
 	private int current = 0, duration, delay;
 	
 	public Animation(String name, String addr, int count, int duration) {
+		
+		
 		image = new Image[count];
 		
-		
-		
 		for(int i = 0; i < count; i++) 
-			image[i] = Toolkit.getDefaultToolkit().getImage(addr + "\\" + name + "-" + i + ".png");
-			
+			image[i] = new ImageIcon(addr + "\\" + name + "-" + i + ".png").getImage();
+		
 		this.duration = duration;
 		delay = duration;
+		
+		
 	}
 	
 	public Image getCurrentImage() {

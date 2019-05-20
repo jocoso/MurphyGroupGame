@@ -6,6 +6,8 @@ import javax.imageio.ImageIO;
 
 public class UtilityTools {
 	
+	public static final String ADDR = "C:\\Users\\Temp\\Desktop\\New folder\\Art\\practice_test";
+	
 	public static String getAddr() {
 		return "C:\\Users\\Temp\\Desktop\\New folder\\Art\\practice_test";
 	}

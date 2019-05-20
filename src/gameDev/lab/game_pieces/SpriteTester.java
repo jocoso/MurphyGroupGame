@@ -1,5 +1,10 @@
 package gameDev.lab.game_pieces;
 import java.awt.event.*;
+
+import javax.swing.ImageIcon;
+
+import gameDev.lab.tools.UtilityTools;
+
 import java.awt.*;
 import java.applet.Applet;
 
@@ -8,8 +13,9 @@ public class SpriteTester extends Applet implements Runnable, KeyListener{
 //		new SpriteTester();
 //	}
 	Thread t;
-	Sprite sprite;
+	Player sprite;
 	Animation anim;
+	Billboard background;
 	
 	boolean up_bttn = false;
 	boolean dw_bttn = false;
@@ -21,7 +27,10 @@ public class SpriteTester extends Applet implements Runnable, KeyListener{
 		
 		sprite = new Player(0, 200, 0);
 		//setVisible(true);
-		
+		Image bg = getImage(UtilityTools.getAddr() + "//background.jpg");
+		background = new Billboard(0,0,0,bg.getWidth(null), bg.getHeight(null),
+				UtilityTools.getAddr() + "//background.jpg");
+		sprite.setFloorY(300);
 		
 		requestFocus();
 		addKeyListener(this);
@@ -34,7 +43,7 @@ public class SpriteTester extends Applet implements Runnable, KeyListener{
 			//System.out.println(rt_bttn);
 			if(rt_bttn) sprite.moveRight(3);
 			if(lt_bttn) sprite.moveLeft(3);
-			if(A_bttn && !sprite.isMoving()) sprite.jump();
+			if(A_bttn && sprite.getState() != Player.STATE_JUMPING) sprite.jump();
 			if(up_bttn) sprite.moveUp();
 			if(dw_bttn) sprite.moveDown();
 			
@@ -51,13 +60,18 @@ public class SpriteTester extends Applet implements Runnable, KeyListener{
 		}
 	}
 	
-	public void update(Graphics g)
+	public void update()
 	{
-		paint(g);
-		
+		sprite.update();
+		repaint();
+	}
+	
+	public Image getImage(String filename) {
+		return new ImageIcon(filename).getImage();
 	}
 	
 	public void paint(Graphics g) {
+		background.draw(g);
 		sprite.draw2D(g);
 	}
 
